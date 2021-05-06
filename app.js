@@ -58,7 +58,7 @@ app.get('/', async (req, res) => { // DÙNG async để đồng bộ
 
 app.post('/search', async (req, res) => {
     let client = await MongoClient.connect(url);
-    let dbo = client.db("technology");
+    let dbo = client.db("technology1");
     let nameInput = req.body.txtName; // dungf để lấy tên 
     let searchCondition = new RegExp(nameInput, 'i')//lấy tên không phân biệt chữ hoa chữ thường
     let results = await dbo.collection("product").find({ name: searchCondition }).toArray();//tìm văn bản
@@ -74,7 +74,7 @@ app.post('/doInsert', async (req, res) => {
     var priceInput = req.body.txtPrice;
     var productcodeInput = req.body.txtProductcode;
     var colorInput = req.body.txtColor;
-    var newProduct = { productName: nameInput, price: priceInput, id: productcodeInput, color: colorInput };
+    var newProduct = { name: nameInput, price: priceInput, productcode: productcodeInput, color: colorInput };
 
     let client = await MongoClient.connect(url);
     let dbo = client.db("technology");
