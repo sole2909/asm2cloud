@@ -1,7 +1,6 @@
 {
   "name": "asm2",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "dependencies": {
     "express": "^4.17.1",
@@ -14,5 +13,14 @@
     "start": "node app.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sole2909/asm2cloud.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sole2909/asm2cloud/issues"
+  },
+  "homepage": "https://github.com/sole2909/asm2cloud#readme",
+  "description": ""
 }
