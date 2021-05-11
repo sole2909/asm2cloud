@@ -3,8 +3,6 @@ var hbs = require('hbs')
 
 var app = express()
 
-var bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: false }))
 app.set('view engine', 'hbs')
 
 var url = 'mongodb+srv://kai:doiaido11@cluster0.7rn9g.mongodb.net/test'; // CẦN ĐỊA CHỈ ĐỂ KẾT NỐI
@@ -16,6 +14,7 @@ app.post('/update', async (req, res) => {
     let priceInput = req.body.txtPrice;
     let productcodeInput = req.body.txtProductcode;
     let colorInput = req.body.txtColor;
+
     let newValues = { $set: { name: nameInput, price: priceInput, productcode: productcodeInput, color: colorInput } };
     var ObjectID = require('mongodb').ObjectID;
     let condition = { "_id": ObjectID(id) };
@@ -58,7 +57,7 @@ app.get('/', async (req, res) => { // DÙNG async để đồng bộ
 
 app.post('/search', async (req, res) => {
     let client = await MongoClient.connect(url);
-    let dbo = client.db("technology1");
+    let dbo = client.db("technology");
     let nameInput = req.body.txtName; // dungf để lấy tên 
     let searchCondition = new RegExp(nameInput, 'i')//lấy tên không phân biệt chữ hoa chữ thường
     let results = await dbo.collection("product").find({ name: searchCondition }).toArray();//tìm văn bản
@@ -66,7 +65,7 @@ app.post('/search', async (req, res) => {
 })
 
 app.get('/insert', (req, res) => {
-    res.render('newProduct')
+    res.render('newProduct', {message: 'Invalid user!'})
 })
 
 app.post('/doInsert', async (req, res) => {
@@ -74,12 +73,16 @@ app.post('/doInsert', async (req, res) => {
     var priceInput = req.body.txtPrice;
     var productcodeInput = req.body.txtProductcode;
     var colorInput = req.body.txtColor;
+if(nameInput.length < 3){
+    res.render('newproduct',{message: 'Invalid user!'})
+}
+else{
     var newProduct = { name: nameInput, price: priceInput, productcode: productcodeInput, color: colorInput };
-
     let client = await MongoClient.connect(url);
     let dbo = client.db("technology");
     await dbo.collection("product").insertOne(newProduct);
     res.redirect('/')
+}
 })
 
 
